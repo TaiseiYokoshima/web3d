@@ -13,8 +13,11 @@ import { GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 
 import { loadMonitor } from './monitor';
 // import { loadMonitor } from './updatedOS';
-import { loadRoom } from './room';
+import { loadRoom, loadScene } from './room';
 import { contain } from 'three/src/extras/TextureUtils.js';
+
+
+import { Models } from './models';
 
 
 const [ scene, cssScene, camera ] = init();
@@ -25,8 +28,8 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 
 
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Strong light
-directionalLight.position.set(5, 10, 7.5);
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Strong light
+// directionalLight.position.set(5, 10, 7.5);
 // scene.add(directionalLight);
 
 const cssRender = createCSSRender();
@@ -45,8 +48,16 @@ glOrbit = generateGLOrbit(camera, glRender);
 
 
 
+const promsie = loadScene(scene);
 
-loadRoom(scene);
+let objMap = null;
+try {
+  objMap = await loadScene(scene);
+} catch (error) {
+  console.log("failed to load scene");
+}
+
+
 
 
 
@@ -78,8 +89,6 @@ function animate() {
 };
 
 animate();
-
-
 initUI();
 
 
