@@ -14,7 +14,6 @@ import { GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
 import { loadMonitor } from './monitor';
 // import { loadMonitor } from './updatedOS';
 import { loadRoom, loadScene } from './room';
-import { contain } from 'three/src/extras/TextureUtils.js';
 
 
 import { Models } from './models';
@@ -22,6 +21,7 @@ import { Models } from './models';
 
 const [ scene, cssScene, camera ] = init();
 
+export const scenecamera = camera;
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 // scene.add(ambientLight);
@@ -37,7 +37,7 @@ let cssOrbit: OrbitControls | null = null;
 cssOrbit = generateCSSOrbit(camera, cssRender);
 
 
-const glRender = createGLRender();
+export const glRender = createGLRender();
 let glOrbit: OrbitControls | null = null;
 glOrbit = generateGLOrbit(camera, glRender);
 
@@ -47,15 +47,19 @@ glOrbit = generateGLOrbit(camera, glRender);
 // loadMonitor(scene);
 
 
+export const promise: { value: Promise<Map<Models, THREE.Object3D>> | null } = { value: null } ;
 
-const promsie = loadScene(scene);
+animate();
+initUI(scene);
 
-let objMap = null;
-try {
-  objMap = await loadScene(scene);
-} catch (error) {
-  console.log("failed to load scene");
-}
+// const promsie = loadScene(scene);
+//
+// let objMap = null;
+// try {
+//   objMap = await loadScene(scene);
+// } catch (error) {
+//   console.log("failed to load scene");
+// }
 
 
 
@@ -88,8 +92,6 @@ function animate() {
   glRender.render(scene, camera);
 };
 
-animate();
-initUI();
 
 
 

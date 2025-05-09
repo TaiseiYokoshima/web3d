@@ -52,7 +52,8 @@ function collectModels(gltfTree:THREE.Group<THREE.Object3DEventMap>, objMap: Map
 }
 
 
-export async function loadScene(scene: THREE.Scene) {
+type LoadDisplayer = (percentage: number) => void;
+export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
 
   return new Promise<Map<Models, THREE.Object3D>>((resolve, reject) => {
 
@@ -75,7 +76,7 @@ export async function loadScene(scene: THREE.Scene) {
       },
 
       (xhr) => {
-        // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        display(xhr.loaded / xhr.total * 100);
       },
 
 
@@ -89,6 +90,14 @@ export async function loadScene(scene: THREE.Scene) {
   })
 };
 
+export async function visible(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, scene: THREE.Scene) {
+  return new Promise<void>((resolve, reject) => {
+    requestAnimationFrame(() => {
+      renderer.render(scene, camera);
+      resolve();
+    })
+  });
+}
 
 
 export function loadRoom(scene: THREE.Scene) {
