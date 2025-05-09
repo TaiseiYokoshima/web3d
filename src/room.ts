@@ -7,7 +7,7 @@ import { findReference } from "./monitor";
 
 import { Models } from "./models";
 
-function collectModels(gltfTree:THREE.Group<THREE.Object3DEventMap>, objMap: Map<Models, THREE.Object3D>) {
+function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>, objMap: Map<Models, THREE.Object3D>) {
   gltfTree.traverse((obj) => {
 
     if (obj.type !== "Object3D") return;

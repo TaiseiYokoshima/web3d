@@ -11,6 +11,35 @@ import { visible } from "../../room";
 
 import { glRender, scenecamera } from "../../main";
 
+import { animate } from "../../main";
+
+function waitForVisibility(objectList: THREE.Object3D[], scene: THREE.Scene, camera: THREE.PerspectiveCamera): Promise<void> {
+  return new Promise((resolve, reject) => {
+
+    const checkVisibility = () => {
+      console.log("checking visibility");
+      const frustum = new THREE.Frustum();
+      frustum.setFromProjectionMatrix(camera.projectionMatrix);
+    
+      for (const object of objectList) {
+        const isVisible = frustum.intersectsObject(object);
+
+
+        if (isVisible)  continue;
+        else {
+          requestAnimationFrame(checkVisibility);
+          return;
+        }
+
+        resolve();
+
+      }
+    };
+
+    checkVisibility();
+  });
+}
+
 
 export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
@@ -33,7 +62,11 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
     const load = async () => {
       const objMap =  await loadScene(scene, update) 
-      await visible(glRender, scenecamera, scene);
+       
+
+      await waitForVisibility(Array.from(objMap.values()), scene, scenecamera);
+      // await visible(glRender, scenecamera, scene);
+      // animate()
       return objMap;
 
     };

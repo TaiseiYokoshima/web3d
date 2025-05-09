@@ -49,8 +49,7 @@ glOrbit = generateGLOrbit(camera, glRender);
 
 export const promise: { value: Promise<Map<Models, THREE.Object3D>> | null } = { value: null } ;
 
-animate();
-initUI(scene);
+// animate();
 
 // const promsie = loadScene(scene);
 //
@@ -80,7 +79,7 @@ window.addEventListener('resize', () => {
   glRender.setSize(window.innerWidth, window.innerHeight);
 }, true);
 
-function animate() {
+export function animate() {
   requestAnimationFrame(animate);
   
 
@@ -94,4 +93,6 @@ function animate() {
 
 
 
+animate();
+initUI(scene);
 

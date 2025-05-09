@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { CSS3DRenderer } from 'three/examples/jsm/Addons.js';
 
 
+
 // const gl_layer = '0';
 const gl_layer = '1';
 
@@ -14,7 +15,7 @@ export function init(): [THREE.Scene, THREE.Scene, THREE.PerspectiveCamera] {
   const cssScene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 0, 5);
+  camera.position.set(0, 10, 3);
   camera.lookAt(0, 0, 0);
 
 
