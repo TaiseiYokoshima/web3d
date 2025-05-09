@@ -18,9 +18,15 @@ function waitForVisibility(objectList: THREE.Object3D[], scene: THREE.Scene, cam
 
     const checkVisibility = () => {
       console.log("checking visibility");
+
       const frustum = new THREE.Frustum();
       frustum.setFromProjectionMatrix(camera.projectionMatrix);
-    
+  
+      const matrix = new THREE.Matrix4();
+      matrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+      frustum.setFromProjectionMatrix(matrix);
+
+
       for (const object of objectList) {
         const isVisible = frustum.intersectsObject(object);
 
@@ -45,6 +51,9 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
   const [percentage, setPercentage] = useState<number>(0);
 
+  const []
+
+
   const ref = useRef(null);
   
 
@@ -64,7 +73,10 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
       const objMap =  await loadScene(scene, update) 
        
 
-      await waitForVisibility(Array.from(objMap.values()), scene, scenecamera);
+      
+      await new Promise( resolve => setTimeout(resolve, 10000));
+
+      // await waitForVisibility(Array.from(objMap.values()), scene, scenecamera);
       // await visible(glRender, scenecamera, scene);
       // animate()
       return objMap;
