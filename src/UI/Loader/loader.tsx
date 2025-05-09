@@ -7,51 +7,42 @@ import styles from "./loader.module.css";
 
 import { loadScene } from "../../room";
 
-import { visible } from "../../room";
-
 import { glRender, scenecamera } from "../../main";
-
 import { animate } from "../../main";
 
-function waitForVisibility(objectList: THREE.Object3D[], scene: THREE.Scene, camera: THREE.PerspectiveCamera): Promise<void> {
-  return new Promise((resolve, reject) => {
+function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
 
-    const checkVisibility = () => {
-      console.log("checking visibility");
-
-      const frustum = new THREE.Frustum();
-      frustum.setFromProjectionMatrix(camera.projectionMatrix);
-  
-      const matrix = new THREE.Matrix4();
-      matrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-      frustum.setFromProjectionMatrix(matrix);
+  const renderedList: Promise<void>[] = [];
 
 
-      for (const object of objectList) {
-        const isVisible = frustum.intersectsObject(object);
+  const traverseAndCollectPromises = (obj: THREE.Object3D) => {
+    if (!(obj instanceof THREE.Mesh)) return;
 
+    const promise = new Promise<void>(resolve => {
 
-        if (isVisible)  continue;
-        else {
-          requestAnimationFrame(checkVisibility);
-          return;
-        }
-
+      obj.onAfterRender = () => {
         resolve();
+        obj.onAfterRender = () => {};
+      };
+    });
 
-      }
-    };
+    renderedList.push(promise);
+  };
 
-    checkVisibility();
-  });
+  scene.traverse(traverseAndCollectPromises);
+
+  return renderedList;
 }
+  
+
+
 
 
 export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
   const [percentage, setPercentage] = useState<number>(0);
+  const [complete, setComplete] = useState<boolean>(false);
 
-  const []
 
 
   const ref = useRef(null);
@@ -62,7 +53,7 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
       console.log("called update after unmounted");
       return;
     }
-    
+
     setPercentage(current);
   }
 
@@ -71,16 +62,14 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
     const load = async () => {
       const objMap =  await loadScene(scene, update) 
-       
 
-      
       await new Promise( resolve => setTimeout(resolve, 10000));
 
-      // await waitForVisibility(Array.from(objMap.values()), scene, scenecamera);
-      // await visible(glRender, scenecamera, scene);
-      // animate()
-      return objMap;
+      let promiseList = checkModelVisibility(scene);
 
+      await Promise.all(promiseList);
+      setComplete(true);
+      return objMap;
     };
 
 
@@ -88,7 +77,7 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
   }, []);
 
-  if (percentage == 100) {
+  if (complete) {
     console.log("finished loading");
     return null;
 

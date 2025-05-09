@@ -6,6 +6,10 @@ import { printObjInfo } from "./utils";
 import { findReference } from "./monitor";
 
 import { Models } from "./models";
+import { glRender } from "./main";
+
+import { scenecamera } from "./main";
+
 
 function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>, objMap: Map<Models, THREE.Object3D>) {
   gltfTree.traverse((obj) => {
@@ -65,6 +69,7 @@ export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
         const monitor = gltf.scene;
 
         scene.add(monitor)
+        glRender.compile(scene, scenecamera);
       
         collectModels(gltf.scene, objMap);
         printObjInfo(scene);
@@ -90,14 +95,6 @@ export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
   })
 };
 
-export async function visible(renderer: THREE.WebGLRenderer, camera: THREE.PerspectiveCamera, scene: THREE.Scene) {
-  return new Promise<void>((resolve, reject) => {
-    requestAnimationFrame(() => {
-      renderer.render(scene, camera);
-      resolve();
-    })
-  });
-}
 
 
 export function loadRoom(scene: THREE.Scene) {
