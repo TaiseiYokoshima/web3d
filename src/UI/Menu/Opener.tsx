@@ -1,17 +1,20 @@
 import styles from './Opener.module.css';
+import { useContext }  from 'react';
+
+import MenuContext from './context';
 
 interface OpenerProps {
-  onClick: () => void;
-  isOpen: boolean;
   transitionDuration: string;
 }
 
-export default function Opener( { onClick, isOpen, transitionDuration }: OpenerProps ) {
+export default function Opener( { transitionDuration }: OpenerProps ) {
+  const context = useContext(MenuContext)!;
 
   return (
     <div 
-      onClick={onClick} 
-      className={` ${styles.opener} ${isOpen ? styles.open : ''} `} 
+      ref={context.opener}
+      onClick={context.openMenu} 
+      className={styles.opener}
       style={{
         transition: `opacity ${transitionDuration}s ease`
       }}

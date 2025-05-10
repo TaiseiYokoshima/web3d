@@ -5,6 +5,14 @@ import styles from "./Loader.module.css";
 import { loadScene } from "Render";
 
 
+
+// interface LoaderProps {
+//   scene: THREE.Scene,
+//   setLoaded: 
+//
+// };
+
+
 function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
   const renderedList: Promise<void>[] = [];
 

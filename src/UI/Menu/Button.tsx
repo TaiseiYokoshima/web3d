@@ -1,18 +1,37 @@
 import styles from './Button.module.css';
-import { Page } from '../imports';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+
+import MenuContext from "./context";
+
+function getTopLevelRoute(path: string): string {
+  if (path === "/") return "/scene";
+
+  const toplevel = path.split("/").filter(Boolean)[0] || "";
+  return "/" + toplevel;
+}
 
 interface NavButtonProps {
-  changePage: () => void;
-  targetPage: Page; 
-  currentPage: Page;
+  targetPage: string; 
   children: React.ReactNode;
 }
 
-type ButtonProps = Omit<NavButtonProps, 'targetPage' | 'changePage'> & {
-  changePage: (page: Page) => void;
-};
 
-function NavButton( {changePage, targetPage, currentPage, children }: NavButtonProps) {
+function NavButton( { targetPage, children }: NavButtonProps) {
+  const context = useContext(MenuContext);
+  const page = useLocation();
+  const [currentPage, setPage] = useState<string>(getTopLevelRoute(page.pathname));
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    context.closeMenu();
+    navigate(targetPage);
+  };
+
+  useEffect(() => {
+    if (currentPage === getTopLevelRoute(page.pathname)) return;
+    setPage(page.pathname);
+  }, [page]);
 
   const className = `
     ${styles.base} 
@@ -20,7 +39,7 @@ function NavButton( {changePage, targetPage, currentPage, children }: NavButtonP
   `;
 
   const navButton = 
-    <button onClick={changePage} className={className}>
+    <button onClick={onClick} className={className}>
       { children }
     </button>;
 
@@ -28,31 +47,27 @@ function NavButton( {changePage, targetPage, currentPage, children }: NavButtonP
 };
 
 
-function generic(props: ButtonProps, target: Page) {
+type ButtonProps = Omit<NavButtonProps, 'targetPage'>;
+function generic(props: ButtonProps, target: string) {
   const navButtonProps: NavButtonProps = {
     ...props,
     targetPage: target,
-    changePage: () => {
-      props.changePage(target);
-    }
-    
   };
 
   return(
     <NavButton {...navButtonProps} />
   );
-
 }
 
 
 export function About(progs: ButtonProps) {
-  return(generic(progs, Page.About));
+  return(generic(progs, '/about'));
 }
 
 export function Models(progs: ButtonProps) {
-  return(generic(progs, Page.Models));
+  return(generic(progs, '/models'));
 }
 
 export function Scene(progs: ButtonProps) {
-  return(generic(progs, Page.Scene));
+  return(generic(progs, '/scene'));
 }

@@ -2,10 +2,9 @@ import styles from './Closer.module.css';
 
 interface CloserProps {
   onClick: () => void;
-  isOpen: boolean;
 }
 
-export default function Closer( { onClick, isOpen }: CloserProps ) {
+export default function Closer( { onClick}: CloserProps ) {
 
   return (
     <div className={styles.closerDiv}>

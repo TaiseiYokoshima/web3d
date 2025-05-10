@@ -1,42 +1,38 @@
 import styles from "./Panel.module.css";
-
 import Closer from "./Closer";
-
 import { About, Scene, Models } from "./Button";
+import MenuContext from "./context";
 
-import { Page } from "../Imports"; 
+import { useContext } from "react";
 
 
 interface MenuProps {
-  isOpen: boolean;
   transitionDuration: string;
-  currentPage: Page;
-  menuToggle: () => void;
-  setPage: (page: Page) => void;
 }
 
-export default function MenuPanel( { isOpen, transitionDuration, currentPage, menuToggle, setPage }: MenuProps ) {
 
+export default function MenuPanel( { transitionDuration }: MenuProps ) {
+  const context = useContext(MenuContext)!;
   return (
-    <div 
-      onClick={menuToggle} 
-      className={`${styles.menu} ${isOpen ? styles.open : ''} `} 
+    <div
+      ref={context.menu}
+      className={styles.menu}
       style={{ transition: `left ${transitionDuration}s ease`}}
       > 
 
-      <Closer onClick={menuToggle} isOpen={isOpen} />
+      <Closer onClick={context.closeMenu} />
 
       <div className={styles.listDiv}>
         
-         <Scene changePage={setPage} currentPage={currentPage}>
+         <Scene>
            Scene
          </Scene>
 
-         <Models changePage={setPage} currentPage={currentPage}>
+         <Models>
            Models
          </Models>
 
-         <About changePage={setPage} currentPage={currentPage}>
+         <About>
            About
          </About>
 

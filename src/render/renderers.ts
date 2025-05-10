@@ -10,21 +10,25 @@ glRenderer.setClearColor(background);
 glRenderer.setSize(window.innerWidth, window.innerHeight, true);
 glRenderer.domElement.style.position = 'absolute';
 glRenderer.domElement.style.top = '0';
+glRenderer.domElement.id = "glScene";
 glRenderer.domElement.style.zIndex = webGLLayer;
+
 
 // main scene css renderer
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize(window.innerWidth, window.innerHeight);
 cssRenderer.domElement.style.position = 'absolute';
 cssRenderer.domElement.style.top = '0';
+cssRenderer.domElement.id = "cssScene";
 cssRenderer.domElement.style.zIndex = cssLayer;
 
 // models scene webgl renderer
-const modelsRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+const modelsRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
 modelsRenderer.setClearColor(background);
 modelsRenderer.setSize(window.innerWidth, window.innerHeight, true);
 modelsRenderer.domElement.style.position = 'absolute';
 modelsRenderer.domElement.style.top = '0';
+modelsRenderer.domElement.id = "modelsScene";
 modelsRenderer.domElement.style.zIndex = modelsLayer;
 
 
