@@ -19,7 +19,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // custom module
+    "baseUrl": ".",
+    "paths": {
+      "Render": ["src/render/index.ts"]
+    },
+
+
+
   },
   "include": ["src"]
 }

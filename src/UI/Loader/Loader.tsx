@@ -1,19 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
-import { promise } from "../../main";
+import styles from "./Loader.module.css";
+import { loadScene } from "Render";
 
-import styles from "./loader.module.css";
-
-import { loadScene } from "../../room";
-
-import { glRender, scenecamera } from "../../main";
-import { animate } from "../../main";
 
 function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
-
   const renderedList: Promise<void>[] = [];
-
 
   const traverseAndCollectPromises = (obj: THREE.Object3D) => {
     if (!(obj instanceof THREE.Mesh)) return;
@@ -30,21 +23,14 @@ function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
   };
 
   scene.traverse(traverseAndCollectPromises);
-
   return renderedList;
 }
   
 
 
-
-
 export default function Loader({ scene } : { scene:  THREE.Scene }) {
-
   const [percentage, setPercentage] = useState<number>(0);
   const [complete, setComplete] = useState<boolean>(false);
-
-
-
   const ref = useRef(null);
   
 
@@ -62,9 +48,6 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
 
     const load = async () => {
       const objMap =  await loadScene(scene, update) 
-
-      await new Promise( resolve => setTimeout(resolve, 10000));
-
       let promiseList = checkModelVisibility(scene);
 
       await Promise.all(promiseList);
@@ -73,7 +56,7 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
     };
 
 
-    promise.value = load();
+    load();
 
   }, []);
 

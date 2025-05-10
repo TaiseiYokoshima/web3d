@@ -2,14 +2,11 @@ import React, { useState, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { MenuPanel, MenuOpener }  from './Menu';
-
-import { Page, menuTransitionDuration } from './Imports';
-
-import Loader from './Loader/loader';
+import { Page, menuTransitionDuration } from './imports';
+import Loader from './Loader';
 
 
 import * as THREE from "three";
-
 
 function App({ scene }: { scene: THREE.Scene }) {
 

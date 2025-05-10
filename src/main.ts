@@ -1,98 +1,29 @@
-import * as THREE from 'three';
-import React from 'react';
-
-
 import { initUI } from './UI/UI';
-
-import { init, createCSSRender, createGLRender } from "./init";
-import { generateCSSOrbit, generateGLOrbit } from './orbitControl';
-
-// import { os, iframe_div, iframe } from './os';
-import { GLTFLoader, OrbitControls } from 'three/examples/jsm/Addons.js';
-
-
-import { loadMonitor } from './monitor';
-// import { loadMonitor } from './updatedOS';
-import { loadRoom, loadScene } from './room';
-
-
-import { Models } from './models';
-
-
-const [ scene, cssScene, camera ] = init();
-
-export const scenecamera = camera;
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-// scene.add(ambientLight);
-
-
-
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Strong light
-// directionalLight.position.set(5, 10, 7.5);
-// scene.add(directionalLight);
-
-const cssRender = createCSSRender();
-let cssOrbit: OrbitControls | null = null;
-cssOrbit = generateCSSOrbit(camera, cssRender);
-
-
-export const glRender = createGLRender();
-let glOrbit: OrbitControls | null = null;
-glOrbit = generateGLOrbit(camera, glRender);
-
-
-
-
-// loadMonitor(scene);
-
-
-export const promise: { value: Promise<Map<Models, THREE.Object3D>> | null } = { value: null } ;
-
-// animate();
-
-// const promsie = loadScene(scene);
-//
-// let objMap = null;
-// try {
-//   objMap = await loadScene(scene);
-// } catch (error) {
-//   console.log("failed to load scene");
-// }
-
-
-
-
-
-// import { loadOS, setOcclusion} from "./updatedOS";
-//
-// loadOS(scene);
-// // setOcclusion(scene);
+import { glScene, cssScene, glControls, glRenderer, cssRenderer, cssControls, camera, modelsRenderer } from 'Render';
 
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
-  cssRender.setSize(window.innerWidth, window.innerHeight);
-  // glRender.setSize(window.innerWidth, window.innerHeight, true);
-  glRender.setSize(window.innerWidth, window.innerHeight);
+  cssRenderer.setSize(window.innerWidth, window.innerHeight);
+  glRenderer.setSize(window.innerWidth, window.innerHeight, true);
+  modelsRenderer.setSize(window.innerWidth, window.innerHeight, true);
 }, true);
 
 export function animate() {
   requestAnimationFrame(animate);
   
 
-  if (cssOrbit) cssOrbit.update();
-  if (glOrbit) glOrbit.update();
+  if (cssControls) cssControls.update();
+  if (glControls) glControls.update();
 
-  // cssRender.render(cssScene, camera);
-  cssRender.render(scene, camera);
-  glRender.render(scene, camera);
+  glRenderer.render(glScene, camera);
+  cssRenderer.render(cssScene, camera);
 };
 
 
 
 animate();
-initUI(scene);
+initUI(glScene);
 

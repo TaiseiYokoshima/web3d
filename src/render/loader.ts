@@ -1,14 +1,12 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from 'three';
 
-import { printObjInfo } from "./utils";
 
 import { findReference } from "./monitor";
 
 import { Models } from "./models";
-import { glRender } from "./main";
-
-import { scenecamera } from "./main";
+import { glRenderer } from "./renderers";
+import { camera, modelsCamera } from "./camera";
 
 
 function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>, objMap: Map<Models, THREE.Object3D>) {
@@ -57,8 +55,7 @@ function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>, objMap: Ma
 
 
 type LoadDisplayer = (percentage: number) => void;
-export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
-
+export default async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
   return new Promise<Map<Models, THREE.Object3D>>((resolve, reject) => {
 
     const loader = new GLTFLoader();
@@ -69,10 +66,9 @@ export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
         const monitor = gltf.scene;
 
         scene.add(monitor)
-        glRender.compile(scene, scenecamera);
+        glRenderer.compile(scene, camera);
       
         collectModels(gltf.scene, objMap);
-        printObjInfo(scene);
         findReference(scene);
 
         for (const key of objMap.keys()) console.log(key);
@@ -97,30 +93,3 @@ export async function loadScene(scene: THREE.Scene, display: LoadDisplayer) {
 
 
 
-export function loadRoom(scene: THREE.Scene) {
-  const loader = new GLTFLoader();
-
-  loader.load( 
-    'scene.glb',
-    (gltf) => { 
-      const monitor = gltf.scene;
-      scene.add(monitor)
-    
-      printObjInfo(scene);
-      findReference(scene);
-
-
-    },
-
-    (xhr) => {
-      // console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    },
-
-
-    (error) => {
-      console.error('An error happened', error);
-      console.log(error);
-      console.log("came here");
-    }
-  );
-}

@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
+import tsconfig from "vite-tsconfig-paths";
 
-console.log("this ran");
 
 export default defineConfig({
-
+  plugins: [tsconfig()],
 });
+
 

@@ -1,5 +1,5 @@
 import styles from './Button.module.css';
-import { Page } from '../Imports';
+import { Page } from '../imports';
 
 interface NavButtonProps {
   changePage: () => void;
