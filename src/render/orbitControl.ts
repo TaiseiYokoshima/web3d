@@ -2,8 +2,8 @@ import { OrbitControls } from 'three/examples/jsm/Addons.js';
 import * as THREE from 'three';
 
 import { remapOrbitControls } from './variables';
-import { camera, modelsCamera } from './camera';
-import { glRenderer, cssRenderer, modelsRenderer } from './renderers';
+import { showCamera, modelsCamera } from './camera';
+import { showRenderer, modelsRenderer } from './renderers';
 
 
 const maps = {
@@ -13,14 +13,9 @@ const maps = {
 };
 
 
-const glControls = new OrbitControls(camera, glRenderer.domElement);
-glControls.enableDamping = true;
-if (remapOrbitControls) glControls.mouseButtons = maps;
-
-
-const cssControls = new OrbitControls(camera, cssRenderer.domElement);
-cssControls.enableDamping = true;
-if (remapOrbitControls) cssControls.mouseButtons = maps;
+const showControls = new OrbitControls(showCamera, showRenderer.domElement);
+showControls.enableDamping = true;
+if (remapOrbitControls) showControls.mouseButtons = maps;
 
 
 const modelsControls = new OrbitControls(modelsCamera, modelsRenderer.domElement);
@@ -28,6 +23,6 @@ modelsControls.enableDamping = true;
 if (remapOrbitControls) modelsControls.mouseButtons = maps;
 
 
-export { glControls, cssControls, modelsControls };
+export { showControls, modelsControls };
 
 

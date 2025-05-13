@@ -1,11 +1,7 @@
 import { Scene } from 'three';
 
-const glScene = new Scene();
-let cssScene = new Scene();
+const showScene = new Scene();
 const modelsScene = new Scene();
-
-cssScene = glScene;
-
-export { glScene, cssScene, modelsScene };
+export { showScene, modelsScene };
 
 

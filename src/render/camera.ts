@@ -3,12 +3,12 @@ import * as THREE from 'three';
 import { cameraPosition, cameraLookAt } from './variables';
 
 
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(...cameraPosition);
-camera.lookAt(...cameraLookAt);
+const showCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
+showCamera.position.set(...cameraPosition);
+showCamera.lookAt(...cameraLookAt);
 
 const modelsCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(...cameraPosition);
-camera.lookAt(...cameraLookAt);
+modelsCamera.position.set(...cameraPosition);
+modelsCamera.lookAt(...cameraLookAt);
 
-export { camera, modelsCamera };
+export { showCamera,  modelsCamera };

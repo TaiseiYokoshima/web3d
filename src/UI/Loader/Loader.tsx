@@ -2,15 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 import styles from "./Loader.module.css";
-import { loadScene } from "Render";
 
-
-
-// interface LoaderProps {
-//   scene: THREE.Scene,
-//   setLoaded: 
-//
-// };
+import { showScene, loadScene } from "Render";
 
 
 function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
@@ -36,7 +29,7 @@ function checkModelVisibility(scene: THREE.Scene): Promise<void>[] {
   
 
 
-export default function Loader({ scene } : { scene:  THREE.Scene }) {
+export default function Loader() {
   const [percentage, setPercentage] = useState<number>(0);
   const [complete, setComplete] = useState<boolean>(false);
   const ref = useRef(null);
@@ -55,8 +48,8 @@ export default function Loader({ scene } : { scene:  THREE.Scene }) {
   useEffect(() => {
 
     const load = async () => {
-      const objMap =  await loadScene(scene, update) 
-      let promiseList = checkModelVisibility(scene);
+      const objMap =  await loadScene(update) 
+      let promiseList = checkModelVisibility(showScene);
 
       await Promise.all(promiseList);
       setComplete(true);

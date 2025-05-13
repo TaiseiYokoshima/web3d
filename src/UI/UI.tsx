@@ -9,12 +9,8 @@ import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-d
 
 import Menu from './Menu';
 
-import * as THREE from "three";
 
-
-
-
-function App({ scene }: { scene: THREE.Scene }) {
+function App() {
 
   return (
     <React.StrictMode>
@@ -24,6 +20,7 @@ function App({ scene }: { scene: THREE.Scene }) {
         </Routes>
 
         <Menu/>
+        <Loader />
 
 
       </Router> 
@@ -33,10 +30,7 @@ function App({ scene }: { scene: THREE.Scene }) {
 
 
 
-
-
-
-export function initUI(scene: THREE.Scene) {
+export function initUI() {
   const div = document.createElement('div');
   div.style.position = 'absolute';
   div.style.top = "0";
@@ -46,6 +40,6 @@ export function initUI(scene: THREE.Scene) {
 
   document.body.appendChild(div);
   const root = createRoot(div);
-  root.render(<App scene={scene} />);
+  root.render(<App />);
 }
 

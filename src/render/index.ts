@@ -1,17 +1,17 @@
-import { camera, modelsCamera } from "./camera";
-import { glRenderer, cssRenderer, modelsRenderer } from "./renderers";
-import { glScene, cssScene, modelsScene } from "./scenes";
-import { glControls, cssControls, modelsControls } from "./orbitControl"; 
+import { showCamera, modelsCamera } from "./camera";
+import { showRenderer, modelsRenderer } from "./renderers";
+import { showScene, modelsScene } from "./scenes";
+import { showControls, modelsControls } from "./orbitControl"; 
 import loadScene from "./loader";
 import { Models } from "src/UI/Menu/Button";
 
 
 
 
-export { glControls, cssControls, modelsControls }; 
-export { glScene, cssScene, modelsScene };
-export { glRenderer, cssRenderer, modelsRenderer };
-export { camera, modelsCamera };
+export { showControls, modelsControls }; 
+export { showScene, modelsScene };
+export { showRenderer, modelsRenderer };
+export { showCamera, modelsCamera };
 export { loadScene };
 export { Models };
 
