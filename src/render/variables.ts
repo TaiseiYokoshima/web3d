@@ -1,4 +1,4 @@
-const show_layer = '1';
+const show_layer = '0';
 const models_layer = '0';
 
 export const remapOrbitControls = true;

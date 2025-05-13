@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { findReference } from "./monitor";
 
 import { showScene } from "./scenes";
+import { collectModels } from "./models";
 
 
 type LoadDisplayer = (percentage: number) => void;
@@ -18,10 +19,8 @@ export default async function loadScene(display: LoadDisplayer) {
         const assets = gltf.scene;
         showScene.add(assets);
       
-        // collectModels(gltf.scene, objMap);
-        // findReference(scene);
+        collectModels(gltf.scene);
         resolve();
-
       },
 
       (xhr) => {

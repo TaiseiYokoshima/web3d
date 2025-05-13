@@ -1,4 +1,4 @@
-import { animate } from './render/switchScenes';
+import { switchToShow } from './render/switchScenes';
 import { initUI } from './UI/UI';
 import { showRenderer, showCamera, modelsRenderer, modelsCamera } from 'Render';
 
@@ -16,5 +16,5 @@ window.addEventListener('resize', () => {
 
 
 initUI();
-animate();
+switchToShow();
 
