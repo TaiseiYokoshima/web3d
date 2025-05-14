@@ -11,6 +11,6 @@ npm install
 npm run dev
 ```
 
-<a href="https://example.com" target="_blank" rel="noopener noreferrer">Placeholder Text</a>
+<a href="https://github.com/TaiseiYokoshima/web3d" target="_blank" rel="noopener noreferrer">Github Link</a>
 
 
