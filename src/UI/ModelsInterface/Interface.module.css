@@ -6,7 +6,6 @@
   z-index: 10;
   background: black;
   color: white;
-  cursor: pointer;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -22,11 +21,48 @@
 
 .previous {
   left: 10%;
+  cursor: pointer;
 }
 
 .next {
   right: 10%;
+  cursor: pointer;
 }
 
+
+
+.reset, .wireFrame {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+
+  box-sizing: border-box;
+  width: fit-content;
+  height: 5vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+
+  background: black;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1vw;
+
+  touch-action: manipulation;
+  cursor: pointer;
+
+}
+
+.reset {
+  margin-top: 1vh;
+  margin-right: 1vw;
+}
+.wireFrame {
+  margin-top: 8vh;
+  margin-right: 1vw;
+}
 
 

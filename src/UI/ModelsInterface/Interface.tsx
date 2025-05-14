@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getTopLevelRoute } from "../Utils";
-import { getCurrentModel, nextModel, previousModel } from "Render";
+import { getCurrentModel, nextModel, previousModel, resetModelCamera, toggleWireframe } from "Render";
 
 import styles from "./Interface.module.css";
 
@@ -34,15 +34,24 @@ export default function Interface() {
     <>
 
       <div onClick={previous} className={styles.previous}>
-        Previous
+        &lt;
       </div>
 
       <div className={styles.current}>
         { model }
       </div>
       
+      <div onClick={resetModelCamera} className={styles.reset}>
+        Reset Camera
+      </div>
+
+
+      <div onClick={toggleWireframe} className={styles.wireFrame}>
+        Toggle Wireframe
+      </div>
+
       <div onClick={next} className={styles.next}>
-        Next
+        &gt;
       </div>
     
     </>

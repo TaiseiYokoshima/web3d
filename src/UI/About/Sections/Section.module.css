@@ -1,0 +1,34 @@
+.section {
+  margin-top: 0.5vh;
+  border-radius: 1vh;
+  width: fit-content;
+  background: black;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+
+
+  box-sizing: border-box;
+  color: white;
+}
+
+.sectionTitle {
+  background: black;
+  color: white;
+  font-size: 3vh;
+
+  box-sizing: border-box;
+  width: fit-content;
+  height: 7vh;
+
+  margin-top: 10vh;
+  padding: 1vw 2vw 1vw 2vw;
+  border-radius: 1vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -11,4 +11,10 @@ const modelsCamera = new THREE.PerspectiveCamera( 75, window.innerWidth / window
 modelsCamera.position.set(...cameraPosition);
 modelsCamera.lookAt(...cameraLookAt);
 
+
+export function resetModelCamera() {
+  modelsCamera.position.set(...cameraPosition);
+  modelsCamera.lookAt(...cameraLookAt);
+};
+
 export { showCamera,  modelsCamera };

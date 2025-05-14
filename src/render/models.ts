@@ -2,6 +2,7 @@ import * as THREE from "three";
 
 
 import { modelsScene as scene } from "./scenes";
+import { resetModelCamera } from "./camera";
 
 
 export enum Model {
@@ -16,6 +17,7 @@ export enum Model {
 
 const objMap = new Map<Model, THREE.Object3D>();
 let currentModel = Model.Room;
+let wireframeOn = false;
 
 export function initialize(model: Model) {
   const light = new THREE.AmbientLight(0xffffff, 0.5);
@@ -38,6 +40,8 @@ export function initiazlieDefault () {
 }
 
 export function setModel(model: Model) {
+  turnOffWireframe();
+
   const objToAdd = objMap.get(model);
   const objToRemove = objMap.get(currentModel);
 
@@ -54,6 +58,7 @@ export function setModel(model: Model) {
   scene.remove(objToRemove);
   scene.add(objToAdd);
   currentModel = model;
+  resetModelCamera();
 }
 
 
@@ -89,11 +94,66 @@ export function getCurrentModel() {
 }
 
 
+function applyWireframe(model: THREE.Object3D<THREE.Object3DEventMap>) {
+  model.traverse((object) => {
+
+    if (!(object instanceof THREE.Mesh)) return;
+
+    if (!Array.isArray(object.material)) {
+      object.material.wireframe = wireframeOn;
+      return;
+    }
+
+    object.material.forEach(material => {
+      material = wireframeOn;
+    });
+
+  });
+}
+
+
+
+function turnOffWireframe() {
+  const obj = objMap.get(currentModel);
+
+  if (!obj) {
+    console.error("current obj not found in turnOffWireframe");
+    return;
+  }
+
+  wireframeOn = false;
+  applyWireframe(obj);
+}
+
+
+function turnOnWireframe() {
+  const obj = objMap.get(currentModel);
+
+  if (!obj) {
+    console.error("current obj not found in turnOnWireframe");
+    return;
+  }
+
+  wireframeOn = true;
+  applyWireframe(obj);
+}
+
+export function toggleWireframe() {
+  if (wireframeOn) turnOffWireframe();
+  else turnOnWireframe();
+}
+
+
+
 
 export function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>) {
   const modelsList: string[] = Object.values(Model);
   gltfTree.traverse((obj) => {
+
+    console.log(obj.type, ": ", obj.name);
  
+    if (obj instanceof THREE.PointLight) 
+      obj.intensity = 3;
 
     if (obj.type !== "Object3D") return;
     if (!modelsList.includes(obj.name)) {

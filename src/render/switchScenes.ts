@@ -13,7 +13,7 @@ enum Scene {
 let currentScene = Scene.Show;
 
 function animateShow() {
-  console.log("animating show");
+  // console.log("animating show");
   if (currentScene !== Scene.Show) return;
 
   requestAnimationFrame(animateShow);
@@ -23,7 +23,7 @@ function animateShow() {
 
 
 function animateModels() {
-  console.log("animating models");
+  // console.log("animating models");
   if (currentScene !== Scene.Models) return;
 
   requestAnimationFrame(animateModels);

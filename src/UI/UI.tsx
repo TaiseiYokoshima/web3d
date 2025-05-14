@@ -7,6 +7,7 @@ import Interface from './ModelsInterface';
 import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Menu from './Menu';
+import AboutPage from './About';
 
 
 function App() {
@@ -19,8 +20,12 @@ function App() {
         </Routes>
 
         <Menu/>
+
         <Loader />
+
+
         <Interface />
+        <AboutPage />
 
 
       </Router> 
