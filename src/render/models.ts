@@ -84,6 +84,11 @@ export function previousModel() {
 }
 
 
+export function getCurrentModel() {
+  return currentModel;
+}
+
+
 
 export function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>) {
   const modelsList: string[] = Object.values(Model);

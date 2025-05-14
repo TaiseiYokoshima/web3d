@@ -1,8 +1,7 @@
-import React, { useState, useContext, useRef, useEffect, RefObject } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-
-import { Page } from './imports';
 import Loader from './Loader';
+import Interface from './ModelsInterface';
 
 
 import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -21,6 +20,7 @@ function App() {
 
         <Menu/>
         <Loader />
+        <Interface />
 
 
       </Router> 
@@ -37,8 +37,8 @@ export function initUI() {
   div.style.zIndex = '10';
   div.style.width = "100vw";
   div.id = "react-root";
-
   document.body.appendChild(div);
+
   const root = createRoot(div);
   root.render(<App />);
 }

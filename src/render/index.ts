@@ -5,7 +5,7 @@ import { showControls, modelsControls } from "./orbitControl";
 import loadScene from "./loader";
 
 import { switchToModels, switchToAbout, switchToShow } from "./switchScenes";
-import { initialize, initiazlieDefault, setModel, nextModel, previousModel } from "./models";
+import { initialize, initiazlieDefault, setModel, nextModel, previousModel, getCurrentModel } from "./models";
 
 
 
@@ -16,6 +16,4 @@ export { showRenderer, modelsRenderer };
 export { showCamera, modelsCamera };
 export { loadScene };
 export { switchToShow, switchToAbout, switchToModels };
-export { initialize, initiazlieDefault, setModel, nextModel, previousModel };
-
-
+export { initialize, initiazlieDefault, setModel, nextModel, previousModel, getCurrentModel };

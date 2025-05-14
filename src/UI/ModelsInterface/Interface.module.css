@@ -1,0 +1,32 @@
+.current, .previous, .next {
+  position: fixed;
+  width: 10vw;
+  height: 5vh;
+  bottom: 10%;
+  z-index: 10;
+  background: black;
+  color: white;
+  cursor: pointer;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 1vw;
+  touch-action: manipulation;
+
+}
+
+.current {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.previous {
+  left: 10%;
+}
+
+.next {
+  right: 10%;
+}
+
+
+
