@@ -1,24 +1,22 @@
 import styles from './Button.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
+import { getTopLevelRoute } from '../Utils';
 
 import MenuContext from "./context";
+import { switchToAbout, switchToModels, switchToShow } from 'Render';
 
-function getTopLevelRoute(path: string): string {
-  if (path === "/") return "/scene";
-
-  const toplevel = path.split("/").filter(Boolean)[0] || "";
-  return "/" + toplevel;
-}
 
 interface NavButtonProps {
   targetPage: string; 
   children: React.ReactNode;
+  sceneSwitch: () => void,
 }
 
 
-function NavButton( { targetPage, children }: NavButtonProps) {
-  const context = useContext(MenuContext);
+
+function NavButton( { targetPage, children, sceneSwitch }: NavButtonProps) {
+  const context = useContext(MenuContext)!;
   const page = useLocation();
   const [currentPage, setPage] = useState<string>(getTopLevelRoute(page.pathname));
   const navigate = useNavigate();
@@ -26,6 +24,7 @@ function NavButton( { targetPage, children }: NavButtonProps) {
   const onClick = () => {
     context.closeMenu();
     navigate(targetPage);
+    sceneSwitch();
   };
 
   useEffect(() => {
@@ -49,9 +48,19 @@ function NavButton( { targetPage, children }: NavButtonProps) {
 
 type ButtonProps = Omit<NavButtonProps, 'targetPage'>;
 function generic(props: ButtonProps, target: string) {
+  let callback = () => {};
+
+  if (target === "/about") callback = switchToAbout;
+  else if (target === "/show") callback = switchToShow;
+  else if (target === "/models") callback = switchToModels;
+  else console.error("mistached target page in generic button generation");
+
+
   const navButtonProps: NavButtonProps = {
     ...props,
     targetPage: target,
+    sceneSwitch: callback
+    
   };
 
   return(
@@ -60,14 +69,14 @@ function generic(props: ButtonProps, target: string) {
 }
 
 
-export function About(progs: ButtonProps) {
-  return(generic(progs, '/about'));
+export function About(props: ButtonProps) {
+  return(generic(props, '/about'));
 }
 
-export function Models(progs: ButtonProps) {
-  return(generic(progs, '/models'));
+export function Models(props: ButtonProps) {
+  return(generic(props, '/models'));
 }
 
-export function Scene(progs: ButtonProps) {
-  return(generic(progs, '/scene'));
+export function Show(props: ButtonProps) {
+  return(generic(props, '/show'));
 }

@@ -16,5 +16,5 @@ window.addEventListener('resize', () => {
 
 
 initUI();
-switchToShow();
+// switchToShow();
 

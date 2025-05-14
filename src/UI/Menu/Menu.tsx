@@ -8,7 +8,7 @@ import closerStyles from "./Panel.module.css";
 import { menuTransitionDuration } from '../imports';
 import  MenuContext  from "./context";
 
-function generateMenuCallbacks(menuIsOpen: boolean) 
+function generateContextValue(menuIsOpen: boolean) 
 {
   const opener = useRef<HTMLDivElement>(null);
   const menu = useRef<HTMLDivElement>(null);
@@ -52,7 +52,7 @@ function generateMenuCallbacks(menuIsOpen: boolean)
 
 export default function Menu() {
   const duration = menuTransitionDuration;
-  const contexValue = generateMenuCallbacks(true);
+  const contexValue = generateContextValue(false);
 
   useEffect(() => {
     if (contexValue.menuIsOpen) contexValue.openMenu();

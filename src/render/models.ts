@@ -18,6 +18,9 @@ const objMap = new Map<Model, THREE.Object3D>();
 let currentModel = Model.Room;
 
 export function initialize(model: Model) {
+  const light = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(light);
+
   const objToInit = objMap.get(model);
 
   if (objToInit == null) {
@@ -27,6 +30,11 @@ export function initialize(model: Model) {
 
   scene.add(objToInit);
   currentModel = model;
+}
+
+
+export function initiazlieDefault () {
+  initialize(Model.Room);
 }
 
 export function setModel(model: Model) {
@@ -88,7 +96,9 @@ export function collectModels(gltfTree: THREE.Group<THREE.Object3DEventMap>) {
       return;
     };
 
-    objMap.set(obj.name as Model, obj);
+    const cloned = obj.clone()
+    cloned.position.set(0, 0, 0);
+    objMap.set(obj.name as Model, cloned);
   });
 
   if (objMap.size !== modelsList.length)

@@ -1,6 +1,6 @@
 import styles from "./Panel.module.css";
 import Closer from "./Closer";
-import { About, Scene, Models } from "./Button";
+import { About, Show, Models } from "./Button";
 import MenuContext from "./context";
 
 import { useContext } from "react";
@@ -24,9 +24,9 @@ export default function MenuPanel( { transitionDuration }: MenuProps ) {
 
       <div className={styles.listDiv}>
         
-         <Scene>
-           Scene
-         </Scene>
+         <Show>
+           Show
+         </Show>
 
          <Models>
            Models
